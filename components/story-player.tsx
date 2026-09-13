@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { ScrollText } from "lucide-react";
+import { RotateCcw, ScrollText } from "lucide-react";
 import { storyFragments, startFragmentId } from "@/lib/data";
 
 export function StoryPlayer() {
   const [fragmentId, setFragmentId] = useState(startFragmentId);
   const fragment = storyFragments[fragmentId];
+  const isEnding = fragment.choices.length === 0;
 
   return (
     <div className="space-y-8">
@@ -25,32 +26,48 @@ export function StoryPlayer() {
         </p>
       </section>
 
-      <section className="space-y-3">
-        <p className="text-xs uppercase tracking-[0.2em] text-amber-300/80">
-          Выбери путь
-        </p>
-        <div className="space-y-3">
-          {fragment.choices.map((choice) => {
-            const Icon = choice.icon;
-            return (
-              <button
-                key={choice.label}
-                type="button"
-                onClick={() => setFragmentId(choice.nextId)}
-                className="group flex w-full items-center gap-4 rounded-xl border border-slate-700/60 bg-[#12161f]/80 p-4 text-left transition-colors hover:border-amber-500/50 hover:bg-amber-500/5"
-              >
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-slate-700/60 bg-[#1a2029] text-slate-400 transition-colors group-hover:border-amber-500/50 group-hover:text-amber-300">
-                  <Icon className="h-5 w-5" />
-                </div>
-                <div className="space-y-0.5">
-                  <p className="font-medium text-slate-100">{choice.label}</p>
-                  <p className="text-sm text-slate-400">{choice.hint}</p>
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </section>
+      {isEnding ? (
+        <section className="rounded-2xl border border-amber-500/30 bg-amber-500/5 p-6 text-center shadow-2xl backdrop-blur animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <p className="mb-5 text-xs uppercase tracking-[0.2em] text-amber-300/80">
+            Финал истории
+          </p>
+          <button
+            type="button"
+            onClick={() => setFragmentId(startFragmentId)}
+            className="inline-flex items-center gap-2 rounded-xl border border-amber-500/40 bg-amber-500/10 px-6 py-3 font-medium text-amber-200 transition-colors hover:border-amber-400/60 hover:bg-amber-500/20"
+          >
+            <RotateCcw className="h-4 w-4" />
+            Начать заново
+          </button>
+        </section>
+      ) : (
+        <section className="space-y-3">
+          <p className="text-xs uppercase tracking-[0.2em] text-amber-300/80">
+            Выбери путь
+          </p>
+          <div className="space-y-3">
+            {fragment.choices.map((choice) => {
+              const Icon = choice.icon;
+              return (
+                <button
+                  key={choice.label}
+                  type="button"
+                  onClick={() => setFragmentId(choice.nextId)}
+                  className="group flex w-full items-center gap-4 rounded-xl border border-slate-700/60 bg-[#12161f]/80 p-4 text-left transition-colors hover:border-amber-500/50 hover:bg-amber-500/5"
+                >
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-slate-700/60 bg-[#1a2029] text-slate-400 transition-colors group-hover:border-amber-500/50 group-hover:text-amber-300">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div className="space-y-0.5">
+                    <p className="font-medium text-slate-100">{choice.label}</p>
+                    <p className="text-sm text-slate-400">{choice.hint}</p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
