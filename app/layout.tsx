@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
-const appName = "Мой сервис";
+const appName = "Тёмные развилки";
 
 export const metadata: Metadata = {
   title: appName,
