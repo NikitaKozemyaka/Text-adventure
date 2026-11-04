@@ -16,11 +16,10 @@ export default function HomePage() {
             Полевой архив · Астра
           </div>
           <h1 className="text-4xl font-bold tracking-tight text-slate-100 sm:text-5xl">
-            Рейс-01
+            Пробуждение
           </h1>
           <p className="text-sm text-slate-400">
-            Пробуждение после крушения, Рея-7, обломки капсулы, убежище. Одна
-            запись — первые часы, не вся карта.
+            «Рейс-01», Рея-7, капсула, километр на восток — к убежищу (0:0).
           </p>
         </header>
 

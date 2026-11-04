@@ -1,6 +1,6 @@
-# Space Text World — Полевой архив: Рейс-01
+# Space Text World — Полевой архив: Пробуждение
 
-Текстовая запись по миру [Space Text World](https://github.com/NikitaKozemyaka/space-text-world): первые часы после крушения «Рейс-01». Сюжет клиентский (`StoryPlayer` + `lib/data`), сервер не нужен.
+Текстовая запись по канону старта [Space Text World](https://github.com/NikitaKozemyaka/space-text-world): «Рейс-01», Рея-7, капсула, убежище (0:0), Sigma-12. Сюжет клиентский (`StoryPlayer` + `lib/data`).
 
 Играть: https://nikitakozemyaka.github.io/Text-adventure/
 

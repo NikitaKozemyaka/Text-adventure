@@ -15,7 +15,7 @@ const exo = Exo_2({
 const appName = "Space Text World";
 
 export const metadata: Metadata = {
-  title: "STW · Полевой архив · Рейс-01",
+  title: "STW · Полевой архив · Пробуждение",
   description:
     "Полевой архив Space Text World: пробуждение после крушения «Рейс-01» на Астре.",
 };

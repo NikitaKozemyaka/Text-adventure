@@ -44,7 +44,9 @@ export function StoryPlayer() {
             {fragment.title}
           </span>
         </div>
-        <p className="text-lg leading-relaxed text-slate-200">{fragment.text}</p>
+        <p className="text-lg leading-relaxed text-slate-200 whitespace-pre-line">
+          {fragment.text}
+        </p>
       </section>
 
       {isEnding ? (
