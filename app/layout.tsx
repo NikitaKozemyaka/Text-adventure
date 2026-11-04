@@ -15,9 +15,9 @@ const exo = Exo_2({
 const appName = "Space Text World";
 
 export const metadata: Metadata = {
-  title: "STW · Аварийный стабилизатор",
+  title: "STW · Полевой архив · Рейс-01",
   description:
-    "Текстовая вылазка по миру Space Text World: Сектор 07, убежище, альянс и корабельный контур.",
+    "Полевой архив Space Text World: пробуждение после крушения «Рейс-01» на Астре.",
 };
 
 export default function RootLayout({

@@ -50,7 +50,7 @@ export function StoryPlayer() {
       {isEnding ? (
         <section className="rounded-2xl border border-cyan-400/30 bg-cyan-500/5 p-6 text-center shadow-2xl backdrop-blur animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-4">
           <p className="text-xs uppercase tracking-[0.2em] text-cyan-200/80">
-            {outcome === "failure" ? "Провал вылазки" : "Финал вылазки"}
+            {outcome === "failure" ? "Провал записи" : "Конец записи"}
           </p>
           {outcome === "failure" ? (
             <p className="text-sm text-slate-300">

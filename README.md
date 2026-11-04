@@ -1,6 +1,6 @@
-# Space Text World — Аварийный стабилизатор
+# Space Text World — Полевой архив: Рейс-01
 
-Текстовая вылазка по миру [Space Text World](https://github.com/NikitaKozemyaka/space-text-world) на Next.js. Сюжет клиентский (`StoryPlayer` + `lib/data`), сервер не нужен.
+Текстовая запись по миру [Space Text World](https://github.com/NikitaKozemyaka/space-text-world): первые часы после крушения «Рейс-01». Сюжет клиентский (`StoryPlayer` + `lib/data`), сервер не нужен.
 
 Играть: https://nikitakozemyaka.github.io/Text-adventure/
 
