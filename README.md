@@ -6,7 +6,7 @@
 
 Бот: [@STWgame_bot](https://t.me/STWgame_bot)
 
-Из бота открывается `/?t=<TOKEN>`. На финале успех ведёт на `t.me/STWgame_bot?start=adv_<TOKEN>_w`, провал — на `..._l`.
+Из бота открывается `/?t=<TOKEN>&c=<ENC>`. На победе показывается код Полевого архива и ссылка `t.me/STWgame_bot?start=adv_<TOKEN>`; на провале — `..._l`.
 
 ## Локально
 

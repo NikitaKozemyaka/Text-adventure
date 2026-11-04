@@ -1,36 +1,74 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { RotateCcw, ScrollText, Send } from "lucide-react";
+import { Copy, RotateCcw, ScrollText, Send } from "lucide-react";
 import { storyFragments, startFragmentId } from "@/lib/data";
 import {
+  ADVENTURE_ENC_STORAGE_KEY,
   ADVENTURE_TOKEN_STORAGE_KEY,
   adventureStartUrl,
+  decodeArchiveCode,
+  parseAdventureEnc,
   parseAdventureToken,
 } from "@/lib/stw";
 
-function readStoredToken(): string | null {
-  if (typeof window === "undefined") return null;
-  const fromUrl = parseAdventureToken(
-    new URLSearchParams(window.location.search).get("t"),
-  );
-  if (fromUrl) {
-    sessionStorage.setItem(ADVENTURE_TOKEN_STORAGE_KEY, fromUrl);
-    return fromUrl;
+function readSession(): { token: string | null; enc: string | null } {
+  if (typeof window === "undefined") return { token: null, enc: null };
+  const params = new URLSearchParams(window.location.search);
+  const urlToken = parseAdventureToken(params.get("t"));
+  const urlEnc = parseAdventureEnc(params.get("c"));
+
+  if (urlToken) {
+    sessionStorage.setItem(ADVENTURE_TOKEN_STORAGE_KEY, urlToken);
+    if (urlEnc) {
+      sessionStorage.setItem(ADVENTURE_ENC_STORAGE_KEY, urlEnc);
+    } else {
+      sessionStorage.removeItem(ADVENTURE_ENC_STORAGE_KEY);
+    }
+  } else if (urlEnc) {
+    sessionStorage.setItem(ADVENTURE_ENC_STORAGE_KEY, urlEnc);
   }
-  return parseAdventureToken(sessionStorage.getItem(ADVENTURE_TOKEN_STORAGE_KEY));
+
+  return {
+    token:
+      urlToken ??
+      parseAdventureToken(sessionStorage.getItem(ADVENTURE_TOKEN_STORAGE_KEY)),
+    enc:
+      urlToken && !urlEnc
+        ? null
+        : urlEnc ??
+          parseAdventureEnc(sessionStorage.getItem(ADVENTURE_ENC_STORAGE_KEY)),
+  };
 }
 
 export function StoryPlayer() {
   const [fragmentId, setFragmentId] = useState(startFragmentId);
   const [token, setToken] = useState<string | null>(null);
+  const [enc, setEnc] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
   const fragment = storyFragments[fragmentId];
   const isEnding = fragment.choices.length === 0;
   const outcome = fragment.outcome;
+  const winCode =
+    isEnding && outcome === "success" && token && enc
+      ? decodeArchiveCode(token, enc)
+      : null;
 
   useEffect(() => {
-    setToken(readStoredToken());
+    const session = readSession();
+    setToken(session.token);
+    setEnc(session.enc);
   }, []);
+
+  async function copyCode(code: string) {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1500);
+    } catch {
+      setCopied(false);
+    }
+  }
 
   return (
     <div className="space-y-8">
@@ -59,21 +97,52 @@ export function StoryPlayer() {
               Попытка провалена — новая попытка будет доступна через 24 часа
             </p>
           ) : null}
-          {token && outcome ? (
+          {outcome === "success" && winCode ? (
+            <div className="space-y-3">
+              <p className="text-2xl font-semibold tracking-wide text-cyan-100">
+                Код Полевого архива: {winCode}
+              </p>
+              <button
+                type="button"
+                onClick={() => copyCode(winCode)}
+                className="inline-flex items-center gap-2 rounded-xl border border-cyan-400/40 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-100 transition-colors hover:border-cyan-300/60 hover:bg-cyan-500/20"
+              >
+                <Copy className="h-4 w-4" />
+                {copied ? "Скопировано" : "Копировать код"}
+              </button>
+            </div>
+          ) : null}
+          {outcome === "success" && token && !enc ? (
+            <p className="text-sm text-slate-300">
+              Ссылка устарела — возьми новую в боте
+            </p>
+          ) : null}
+          {token && outcome === "failure" ? (
             <a
-              href={adventureStartUrl(token, outcome)}
+              href={adventureStartUrl(token, "failure")}
               className="inline-flex items-center gap-2 rounded-xl border border-cyan-400/50 bg-cyan-400 px-6 py-3 font-medium text-slate-950 transition-colors hover:bg-cyan-300"
             >
               <Send className="h-4 w-4" />
-              {outcome === "success"
-                ? "Получить награду в боте"
-                : "Вернуться в бот"}
+              Вернуться в бот
             </a>
-          ) : (
+          ) : null}
+          {token && outcome === "success" && winCode ? (
+            <div className="space-y-2">
+              <a
+                href={adventureStartUrl(token, "success")}
+                className="inline-flex items-center gap-2 rounded-xl border border-cyan-400/50 bg-cyan-400 px-6 py-3 font-medium text-slate-950 transition-colors hover:bg-cyan-300"
+              >
+                <Send className="h-4 w-4" />
+                Получить награду в боте
+              </a>
+              <p className="text-sm text-slate-400">введи код в боте</p>
+            </div>
+          ) : null}
+          {!token ? (
             <p className="text-sm text-slate-400">
               Чтобы получить награду, открой приключение из бота STW
             </p>
-          )}
+          ) : null}
           <div>
             <button
               type="button"
