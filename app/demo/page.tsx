@@ -1,11 +1,14 @@
-import { isDatabaseAvailable } from "@/lib/db";
-import { getAllServices } from "@/lib/models";
 import { mockServices } from "@/lib/mock-data";
 import { ServiceCatalog } from "@/components/service-catalog";
 
-export const dynamic = "force-dynamic";
-
 async function getServices() {
+  if (process.env.OUTPUT_MODE === "export" || process.env.USE_DATABASE === "false") {
+    return { services: mockServices, dbAvailable: false };
+  }
+
+  const { isDatabaseAvailable } = await import("@/lib/db");
+  const { getAllServices } = await import("@/lib/models");
+
   if (await isDatabaseAvailable()) {
     try {
       return { services: await getAllServices(), dbAvailable: true };
