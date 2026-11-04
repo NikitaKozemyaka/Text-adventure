@@ -1,10 +1,12 @@
-# Тёмные развилки — Холодный рассвет
+# Space Text World — Аварийный стабилизатор
 
-Текстовая приключенческая игра на Next.js. Игра полностью клиентская: сюжет и выборы живут в браузере, сервер и DynamoDB для прохождения не нужны.
+Текстовая вылазка по миру [Space Text World](https://github.com/NikitaKozemyaka/space-text-world) на Next.js. Сюжет клиентский (`StoryPlayer` + `lib/data`), сервер не нужен.
 
-Публичная версия на GitHub Pages: https://nikitakozemyaka.github.io/Text-adventure/
+Играть: https://nikitakozemyaka.github.io/Text-adventure/
 
-Если страница ещё не открывается, один раз включите деплой: **Settings → Pages → Build and deployment → Source: GitHub Actions**, затем **Actions → Deploy to GitHub Pages → Re-run jobs**.
+Бот: [@STWgame_bot](https://t.me/STWgame_bot)
+
+Из бота открывается `/?t=<TOKEN>`. На финале успех ведёт на `t.me/STWgame_bot?start=adv_<TOKEN>_w`, провал — на `..._l`.
 
 ## Локально
 
@@ -13,7 +15,7 @@ npm ci
 npm run dev
 ```
 
-Статическая сборка (как на Pages):
+Статическая сборка:
 
 ```bash
 npm run build:static
