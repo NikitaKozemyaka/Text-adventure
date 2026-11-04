@@ -1,17 +1,25 @@
 import type { NextConfig } from "next";
 
+const isStaticExport = process.env.OUTPUT_MODE === "export";
+
+// GitHub Pages project site: https://nikitakozemyaka.github.io/Text-adventure/
 const basePath =
-  process.env.BASE_PATH !== undefined ? process.env.BASE_PATH : "";
+  process.env.BASE_PATH !== undefined
+    ? process.env.BASE_PATH
+    : isStaticExport
+      ? "/Text-adventure"
+      : "";
 
 const nextConfig: NextConfig = {
-  output: process.env.OUTPUT_MODE === "export" ? "export" : undefined,
+  output: isStaticExport ? "export" : undefined,
 
   ...(basePath && {
     basePath,
     assetPrefix: basePath,
   }),
 
-  ...(process.env.OUTPUT_MODE === "export" && {
+  ...(isStaticExport && {
+    trailingSlash: true,
     images: {
       unoptimized: true,
     },
