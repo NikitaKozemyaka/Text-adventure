@@ -4,6 +4,8 @@
 
 Публичная версия на GitHub Pages: https://nikitakozemyaka.github.io/Text-adventure/
 
+Если страница ещё не открывается, один раз включите деплой: **Settings → Pages → Build and deployment → Source: GitHub Actions**, затем **Actions → Deploy to GitHub Pages → Re-run jobs**.
+
 ## Локально
 
 ```bash
